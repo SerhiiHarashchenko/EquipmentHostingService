@@ -22,17 +22,18 @@ builder.Services.AddScoped<IEquipmentTypeRepository, EquipmentTypeRepository>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<IContractService, ContractsService>();
+builder.Services.AddSingleton<BackgroundLoggingService>();
 
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+
 app.UseMiddleware<ApiKeyMiddleware>();
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
