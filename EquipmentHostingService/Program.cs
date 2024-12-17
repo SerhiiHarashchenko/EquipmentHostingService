@@ -1,6 +1,7 @@
 using EquipmentHostingService.Data;
 using EquipmentHostingService.Data.Repositories;
 using EquipmentHostingService.Mapping;
+using EquipmentHostingService.Middleware;
 using EquipmentHostingService.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,13 +19,11 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<IContractService, ContractsService>();
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseMiddleware<ApiKeyMiddleware>();
 
 app.UseHttpsRedirection();
 
