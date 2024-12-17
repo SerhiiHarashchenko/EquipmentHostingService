@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EquipmentHostingService.BackgroundProcessing;
 using EquipmentHostingService.Data.Entities;
 using EquipmentHostingService.Data.Repositories;
 using EquipmentHostingService.DTOs;
@@ -11,17 +12,20 @@ namespace EquipmentHostingService.Services
         private readonly IFacilityRepository _facilityRepository;
         private readonly IEquipmentTypeRepository _equipmentTypeRepository;
         private readonly IMapper _mapper;
+        private readonly IMessageQueue _messageQueue; 
 
         public ContractsService(
             IContractRepository contractRepository,
             IFacilityRepository facilityRepository,
             IEquipmentTypeRepository equipmentTypeRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IMessageQueue messageQueue)               
         {
             _contractRepository = contractRepository;
             _facilityRepository = facilityRepository;
             _equipmentTypeRepository = equipmentTypeRepository;
             _mapper = mapper;
+            _messageQueue = messageQueue;             
         }
 
         public async Task<ContractDto> CreateContractAsync(CreateContractDto createContractDto)
@@ -37,6 +41,8 @@ namespace EquipmentHostingService.Services
                 contractEntity.FacilityCode,
                 contractEntity.EquipmentTypeCode,
                 contractEntity.EquipmentQuantity);
+
+            _messageQueue.Enqueue($"Contract created: {createContractDto}"); 
 
             return _mapper.Map<ContractDto>(savedContract);
         }

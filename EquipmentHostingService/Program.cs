@@ -1,3 +1,4 @@
+using EquipmentHostingService.BackgroundProcessing;
 using EquipmentHostingService.Data;
 using EquipmentHostingService.Data.Repositories;
 using EquipmentHostingService.Mapping;
@@ -10,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<EquipmentHostingServiceDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddSingleton<IMessageQueue, InMemoryMessageQueue>();
+builder.Services.AddHostedService<BackgroundProcessor>();
 
 builder.Services.AddScoped<IContractRepository, ContractRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
