@@ -54,14 +54,36 @@ For the sake of simplicity, I did not hide any sensitive information.
 
 	Request Body:
 
-	json
-	``
+	```json
 	{
 	  "facilityCode": "NF001",
 	  "equipmentTypeCode": "ET001",
 	  "equipmentQuantity": 1
 	}
-	``
+	```
+### Predefined data for testing:  
+
+1. EquipmentType Table
+
+| Code        | Name               | Area   |  
+| ----------- | ------------------ | ------ |  
+| ET001       | Generator          | 50     |  
+| ET002       | Pump               | 30     |  
+| ET003       | Compressor         | 60     |  
+| ET004       | Transformer        | 80     |  
+| ET005       | Boiler             | 100    |  
+| ET006       | Packaging machine  | 0      |  
+| ET007       | Grinder            | -2     |  
+
+2. Facility Table
+
+| Code        | Name               | StandardArea |  
+| ----------- | ------------------ | ------------ |  
+| EF004       | East Facility      | 0            |  
+| NEF003      | Northeast Facility | 1000         |  
+| NF001       | North Facility     | 1000         |  
+| SF002       | South Facility     | 1500         |  
+| WF005       | West Facility      | -100         |  
 
 ---
 
